@@ -1,0 +1,9 @@
+{
+  "name": "sqlite-app",
+  "private": true,
+  "main": "main.ts",
+  "scripts": {
+    "start": "node main.ts"
+  },
+  "type": "module"
+}

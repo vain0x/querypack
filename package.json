@@ -1,0 +1,30 @@
+{
+  "name": "querypack",
+  "version": "0.1.0",
+  "description": "Code generator from SQL files",
+  "type": "module",
+  "main": "src/main.ts",
+  "bin": {
+    "querypack": "./bin/querypack.js"
+  },
+  "scripts": {
+    "start": "node src/main.ts",
+    "build": "node build.js",
+    "test": "node --test \"**/*.test.ts\""
+  },
+  "keywords": [
+    "cli"
+  ],
+  "author": "vain0x",
+  "license": "CC0-1.0",
+  "files": [
+    "README.md",
+    "LICENSE",
+    "bin/querypack.js"
+  ],
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "esbuild": "^0.27.2",
+    "typescript": "^5.9.3"
+  }
+}
