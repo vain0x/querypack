@@ -6,7 +6,7 @@ Prerequisites: Node.js
 
 ## Install
 
-not released yet
+Not released yet.
 
 ## Cheatsheet
 
@@ -18,11 +18,11 @@ Pragmas:
 -- field fieldName: fieldType
 ```
 
-Mode:
+Modes:
 
 - `:one`, `:many`, `:exec`, `:execresult`, `:noemit`
 
-Execution:
+Run:
 
 ```sh
 querypack src/queries -o target/queries
@@ -56,7 +56,7 @@ WHERE (:enabledOnly = 0 OR users.is_enabled = 1)
 querypack src/queries -o target/queries
 ```
 
-- Generated code looks like the following (not actual code)
+- Generated code looks roughly like this (simplified):
     - .d.ts: Types
     - .js: Values and function definitions
 
@@ -73,7 +73,7 @@ export function findUsers(client: QueryPack.DbClient, params: findUsers_Params):
 
 ```js
 // file: target/queries/queries.js
-export const findUsersQuery = `
+export const findUsers_Query = `
     SELECT
         users.id,
         users.name,
@@ -82,18 +82,18 @@ export const findUsersQuery = `
     WHERE (:enabledOnly = 0 OR users.is_enabled = 1)`
 
 export async function findUsers(client, params) {
-    const rows = await client.many(sql, params)
+    const rows = await client.many(findUsers_Query, params)
     return rows.map(function decodeRow(row) {
         return {
             id: row["id"],
             name: row["name"],
-            is_enabled: Boolean(row["is_enabled"])
+            is_enabled: !!(row["is_enabled"])
         }
     })
 }
 ```
 
-- Setup `DbClient` adaptor depends on the DB client that you use
+- Implement a `DbClient` adapter for your database client:
 
 ```ts
 export class MyDbClient implements QueryPack.DbClient {
@@ -112,7 +112,7 @@ import { withDbClient } from "./your_db_connector"
 
 async function app() {
     await withDbClient(async (client: QueryPack.DbClient) => {
-        const users = await findUsers(client, { enabledOnly: true }
+        const users = await findUsers(client, { enabledOnly: true })
         //    ^~~~~ typed
 
         console.log(users.map(u => `${u.id}: ${u.name}`))
@@ -120,7 +120,7 @@ async function app() {
 }
 ```
 
-### Modification statements (Insert/Update/Delete)
+### Modification statements (INSERT/UPDATE/DELETE)
 
 Use `:exec` (or `:execresult`) mode.
 

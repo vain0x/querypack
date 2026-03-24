@@ -1,10 +1,8 @@
 # Specification
 
-TODO
-
 ## Pragma syntax
 
-Use SQL line comments
+Use SQL line comments:
 
 - `-- name: <NAME> [MODE]` (e.g. `-- name: searchPosts :many`)
     - MODE:
@@ -13,12 +11,12 @@ Use SQL line comments
         - `:exec`: execute a statement (insert/update/delete)
         - `:execresult`: execute an insert statement returning its result (for MySQL)
         - `:noemit`: only query text and type definitions
-- `param <NAME>: <TYPE>` (e.g. `-- param id: number`)
+- `-- param <NAME>: <TYPE>` (e.g. `-- param id: number`)
     - defines a query's parameter
-- `field <NAME>: <TYPE>` (e.g. `-- field name: string`)
+- `-- field <NAME>: <TYPE>` (e.g. `-- field name: string`)
     - defines a field of output rows
 
-Note pragma comments must be at the start of each line.
+Note: pragma comments must be at the start of each line.
 
 ## Generated declarations and definitions
 
@@ -51,7 +49,7 @@ export function queryname_decodeRow(row): queryname_DataRow {
 }
 ```
 
-decoding expressions
+### Decoding expressions
 
 - type `boolean`: `!!expr`
 - type `bigint`: `BigInt(expr)`
@@ -86,16 +84,16 @@ Options:
     -V, --version           Print version
 ```
 
-example: Generate code based on `src/queries/**/*.sql`, write to `target/queries/generated.{d.ts,js}`.
+Example: generate code from `src/queries/**/*.sql`, writing to `target/queries/queries.{d.ts,js}`.
 
 ```sh
 querypack src/queries -o target/queries
 ```
 
-## comparison with sqlc
+## Comparison with sqlc
 
-querypack is inspired with sqlc (sql-to-code compiler)
+querypack is inspired by sqlc (a SQL-to-code compiler)
 
 - querypack is much simpler
-    - no schema, no multiple host language support
+    - no schema, no support for multiple host languages
 - querypack is not type-safe
